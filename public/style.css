@@ -1,24 +1,62 @@
+/* Deep black/dark purple theme */
 body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    text-align: center; 
     background-color: #0A0B10; 
-    color: #ffffff; 
-    font-family: 'Inter', sans-serif; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    padding: 20px; 
+    color: #E0E0E0; 
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
-h1 { color: #8A2BE2; }
+
+h1 { color: #8A2BE2; margin-bottom: 20px; }
+
+/* The Goal Container (from your initial requirement) */
+.goal-container { 
+    background-color: #141226; 
+    border: 1px solid #3A2152;
+    padding: 20px; 
+    margin: 10px auto; 
+    border-radius: 12px; 
+    width: 300px;
+}
+
+.goal-card { 
+    padding: 10px;
+    border-bottom: 1px solid #3A2152;
+}
+
+/* The Wheel Styling */
 #wheel { 
     border: 8px solid #3A2152; 
     border-radius: 50%; 
     background: #141226; 
-    margin: 20px;
+    margin: 30px auto; 
+    display: block;
+    width: 400px;
+    height: 400px;
+    /* This transition makes it spin smoothly */
     transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
 }
-.goal-container { 
-    background: #141226; 
-    padding: 20px; 
-    border-radius: 12px; 
-    border: 1px solid #3A2152;
-    width: 300px;
+
+/* Button Styling */
+button {
+    background-color: #6D28D9;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #8A2BE2;
 }
