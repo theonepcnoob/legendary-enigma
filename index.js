@@ -1,17 +1,28 @@
 const express = require('express');
 const { Client } = require('pg');
 const app = express();
-app.use(express.json());
 app.use(express.static('public'));
 
-const client = new Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
-client.connect();
+// Force it to use the environment variable
+const dbUrl = process.env.DATABASE_URL;
 
-// Basic API to get goals
-app.get('/api/goals', async (req, res) => {
-    const result = await client.query('SELECT * FROM goals');
-    res.json(result.rows);
+const client = new Client({
+    connectionString: dbUrl,
+    ssl: { rejectUnauthorized: false }
 });
 
-const PORT = process.env.PORT || 3000;
+client.connect()
+    .then(() => console.log("Connected to Postgres successfully!"))
+    .catch(err => console.error("Could not connect to database:", err));
+
+app.get('/api/goals', async (req, res) => {
+    try {
+        const result = await client.query('SELECT * FROM goals');
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).send("Database error: " + err.message);
+    }
+});
+
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
