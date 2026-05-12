@@ -1,46 +1,24 @@
-/* Deep black background */
 body { 
-    font-family: 'Segoe UI', sans-serif; 
-    text-align: center; 
     background-color: #0A0B10; 
-    color: #E0E0E0; 
-    margin: 0;
-    padding: 20px;
+    color: #ffffff; 
+    font-family: 'Inter', sans-serif; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    padding: 20px; 
 }
-
-h1 { color: #8A2BE2; } /* A nice bright purple for headers */
-
-/* The Wheel Container */
+h1 { color: #8A2BE2; }
 #wheel { 
-    border: 5px solid #3A2152; 
+    border: 8px solid #3A2152; 
     border-radius: 50%; 
-    margin: 20px auto; 
-    display: block; 
     background: #141226; 
+    margin: 20px;
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
 }
-
-/* Goal Cards in Dark Purple */
-.goal-card { 
-    background-color: #141226; 
-    border: 1px solid #3A2152;
-    padding: 15px; 
-    margin: 10px auto; 
+.goal-container { 
+    background: #141226; 
+    padding: 20px; 
     border-radius: 12px; 
-    max-width: 400px;
-}
-
-/* Button Styling */
-button {
-    background-color: #6D28D9;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background-color: #8A2BE2;
+    border: 1px solid #3A2152;
+    width: 300px;
 }
