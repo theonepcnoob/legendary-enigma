@@ -2,9 +2,8 @@ const express = require('express');
 const { Client } = require('pg');
 const app = express();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const io = require('socket.io')(http, { cors: { origin: "*" } });
 
-app.use(express.json());
 app.use(express.static('public'));
 
 const client = new Client({
@@ -12,21 +11,21 @@ const client = new Client({
     ssl: { rejectUnauthorized: false }
 });
 
-client.connect().catch(err => console.error("DB Error", err));
+client.connect().catch(err => console.error("Database Connection Failed!", err));
 
-// Database API
+// API: Safe version
 app.get('/api/goals', async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM goals');
         res.json(result.rows);
-    } catch (err) { res.status(500).send("Database not ready"); }
+    } catch (err) {
+        console.error(err);
+        res.json([]); // Send an empty list instead of crashing
+    }
 });
 
-// Socket.io Real-time logic
 io.on('connection', (socket) => {
-    socket.on('spin', () => {
-        io.emit('triggerSpin'); // Tell everyone to spin
-    });
+    socket.on('spin', () => io.emit('triggerSpin'));
 });
 
 const PORT = process.env.PORT || 10000;
