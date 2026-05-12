@@ -1,1 +1,3 @@
-
+body { font-family: sans-serif; text-align: center; background: #1a1a1a; color: white; }
+#wheel { border: 5px solid #fff; border-radius: 50%; margin: 20px auto; display: block; }
+.goal-card { background: #333; padding: 15px; margin: 10px; border-radius: 8px; }
