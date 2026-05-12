@@ -1,28 +1,33 @@
 const express = require('express');
 const { Client } = require('pg');
 const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
+app.use(express.json());
 app.use(express.static('public'));
 
-// Force it to use the environment variable
-const dbUrl = process.env.DATABASE_URL;
-
 const client = new Client({
-    connectionString: dbUrl,
+    connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
 });
 
-client.connect()
-    .then(() => console.log("Connected to Postgres successfully!"))
-    .catch(err => console.error("Could not connect to database:", err));
+client.connect().catch(err => console.error("DB Error", err));
 
+// Database API
 app.get('/api/goals', async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM goals');
         res.json(result.rows);
-    } catch (err) {
-        res.status(500).send("Database error: " + err.message);
-    }
+    } catch (err) { res.status(500).send("Database not ready"); }
+});
+
+// Socket.io Real-time logic
+io.on('connection', (socket) => {
+    socket.on('spin', () => {
+        io.emit('triggerSpin'); // Tell everyone to spin
+    });
 });
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+http.listen(PORT, () => console.log(`Server running on port ${PORT}`));
